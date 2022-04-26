@@ -8,173 +8,71 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-	static int TotalAmount=0;
+	static int totalAmount=0;
 	static Scanner sc = new Scanner(System.in);
-	static List<Stationary> things =  new ArrayList<>();
+	static List<Stationary> Stationaythings =  new ArrayList<>();
 	static List<Billing> Bill = new ArrayList<>();
 	static String name;
+	int Buyid;
+	
 
 	public static void main(String[] args) {
-		Stationary Pencil   = new Stationary(1,"Pencil",3,30);
-		Stationary Pen      = new Stationary(2,"Pen",5,20);
-		Stationary Rubber    = new Stationary(3,"Rubber",2,10);
-		Stationary InkBottle = new Stationary(4,"InkBottle",25,5);
-		Stationary Gelpen    = new Stationary(5,"GelPen",10,4);
+		Stationary pencil   = new Stationary(1,"Pencil\t",3,30);
+		Stationary pen      = new Stationary(2,"Pen\t",5,20);
+		Stationary rubber    = new Stationary(3,"Rubber\t",2,10);
+		Stationary inkBottle = new Stationary(4,"InkBottle",25,5);
+		Stationary gelpen    = new Stationary(5,"GelPen\t",10,4);
 	
-		things.add(Pencil);
-		things.add(Pen);
-		things.add(Rubber);
-		things.add(InkBottle);
-		things.add(Gelpen);
-		System.out.println("Welcome to Stationary");
+		Stationaythings.add(pencil);
+		Stationaythings.add(pen);
+		Stationaythings.add(rubber);
+		Stationaythings.add(inkBottle);
+		Stationaythings.add(gelpen);
+		Main main = new Main();
+		System.out.println("*****Welcome to Stationary*****");
+		main.inputMenu();
+	}
+	public void inputMenu() {
 		System.out.println("Enter Your Name:");
-		name = sc.nextLine();
-		System.out.println("Enter Y to display All Available Things");
-		char choice = sc.next().charAt(0);
-		if(choice=='Y'||choice=='y') {
-			displayThings();
+		String namePattern = "[^\\p{P}|^\\d+]+";
+		//true if name contains only alphabets, false - otherwise
+		name = sc.next();
+		boolean result =name.matches(namePattern);
+		if(result==true) {
+			System.out.println("Enter Y to display All Available Things");
+			char choice = sc.next().charAt(0);
+			if(choice=='Y'||choice=='y') {
+				displayThings();
+			}else {
+				System.out.println("Oops Okay:-(\nBYEeeee");
+			}
 		}else {
-			System.out.println("Oops Okay:-(\nBYEeeee");
+			System.out.println("Please Enter a ProperName");
+			main(null);
 		}
 	}
-	public static void order() {
+	public void order() {
 		
 		System.out.println("Choose the things whatever you Want by clicking on the id");
 		int Buyid=sc.nextInt();
-		char again;
-		switch(Buyid) {
-		case 1:
-			System.out.println("Enter the number of Pencils You Want");
-			int pencilQuantity=sc.nextInt();		
-			if(pencilQuantity<=things.get(0).getupdatedQuantity()) {
-				TotalAmount=TotalAmount+(pencilQuantity*3);
-				things.get(0).updateQuantity(pencilQuantity);
-				Billing PencilBill = new Billing("Pencil",pencilQuantity, pencilQuantity*3);
-				Bill.add(PencilBill);
-				System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
-				again=sc.next().charAt(0);
-				if(again=='S'||again=='s') {
-					order();
-				}else if(again=='d'||again=='D'){
-					displayThings();
-				}else {
-					printBill();
-					System.out.println("Your Total Amount is "+TotalAmount);
-				}}
-			else {
-				System.out.println("Sorry we only have "+things.get(0).getQuantity()+"pieces"+"Enter below the stock level");
-				order();
-			}
-			break;
-						
-		case 2:
-			System.out.println("Enter the number of Pen You Want");
-			int penQuantity=sc.nextInt();
-			if(penQuantity<=things.get(1).getupdatedQuantity()) {
-				things.get(1).updateQuantity(penQuantity);
-				TotalAmount=TotalAmount+(penQuantity*5);
-				Billing PenBill = new Billing("PEN", penQuantity, penQuantity*5);
-				Bill.add(PenBill);
-				System.out.println("For to continue order press S or B for PayAmount & Bill D to display the Menu");
-				again=sc.next().charAt(0);
-				if(again=='S'||again=='s') {
-					order();
-				}else if(again=='d'||again=='D'){
-					displayThings();
-				}else {
-					printBill();
-					System.out.println("Your Total Amount is "+TotalAmount);
-				}
-			}else {
-				System.out.println("Sorry we only have "+things.get(1).getQuantity()+"pieces"+"Enter below the stock level");
-				order();
-			}
-			break;
-		case 3:
-			System.out.println("Enter the number of Rubber  You Want");
-			int RubberQuantity=sc.nextInt();
-			if(RubberQuantity<=things.get(2).getupdatedQuantity()) {
-				things.get(2).updateQuantity(RubberQuantity);
-				TotalAmount=TotalAmount+(RubberQuantity*2);
-				Billing RubberBill = new Billing("RUBBER", RubberQuantity, RubberQuantity*2);
-				Bill.add(RubberBill);
-				System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
-				again=sc.next().charAt(0);			
-				if(again=='S'||again=='s') {
-					order();
-				}else if(again=='d'||again=='D'){
-					displayThings();
-				}else {
-					printBill();
-					System.out.println("Your Total Amount is "+TotalAmount);
-				}
-			}else {
-				System.out.println("Sorry we only have "+things.get(2).getQuantity()+"pieces"+"Enter below the stock level");
-				order();
-			}
-			break;
-		case 4:
-			System.out.println("Enter the number of InkBottle You Want");
-			int InkQuantity=sc.nextInt();
-			if(InkQuantity<=things.get(3).getupdatedQuantity()) {
-				things.get(3).updateQuantity(InkQuantity);
-				TotalAmount=TotalAmount+(InkQuantity*25);
-				Billing InkBill = new Billing("INKBOTTLE", InkQuantity, InkQuantity*25);
-				Bill.add(InkBill);
-				System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
-				again=sc.next().charAt(0);
-				if(again=='S'||again=='s') {
-					order();
-				}else if(again=='d'||again=='D'){
-					displayThings();
-				}else {
-					printBill();
-					System.out.println("Your Total Amount is "+TotalAmount);
-					
-				}
-			}else {
-				System.out.println("Sorry we only have "+things.get(3).getQuantity()+"pieces"+"Enter below the stock level");
-				order();
-			}break;
-		case 5:
-			System.out.println("Enter the number of GelPen You Want");
-			int GelPenQuantity=sc.nextInt();
-			if(GelPenQuantity<=things.get(4).getupdatedQuantity()) {
-				things.get(4).updateQuantity(GelPenQuantity);
-				TotalAmount=TotalAmount+(GelPenQuantity*10);
-				Billing GelPenBill = new Billing("GELPEN", GelPenQuantity, GelPenQuantity*10);
-				Bill.add(GelPenBill);
-				System.out.println("For to continue order press S or B for PayAmount&Bill or D to display the Menu");
-				again=sc.next().charAt(0);
-				if(again=='S'||again=='s') {
-					order();
-				}else if(again=='d'||again=='D'){
-					displayThings();
-				}else {
-					printBill();
-					System.out.println("Your Total Amount is "+TotalAmount);
-				}
-			}else {
-				System.out.println("Sorry we only have "+things.get(4).getQuantity()+"pieces"+"Enter below the stock level");
-				order();
-			}
-			break;
-		default :
+		if(Buyid>=1 && Buyid<=5)
+		{
+			process(Buyid);
+		}
+		else
+		{
 			System.out.println("Enter the correct id matching to Your Item");
 			order();
 		}
 	}
-	public static void displayThings() {
-		
-//		Iterator<Stationary> itr = things.iterator();
-//		while(itr.hasNext()) {
-//			System.out.println(itr.next());
-//		}
-		for(Stationary s:things) {
+
+	public void displayThings() {
+		System.out.println("Productid"+"\tProductname"+"\tPrice"+"\tQuantity");
+		for(Stationary s:Stationaythings) {
 			System.out.println(s);
 		}
 		System.out.println("For to Buy things press S or press Anyother to Exit:-)");
-		System.out.println("Currently Your Payable Amount is "+TotalAmount);
+//		System.out.println("Currently Your Payable Amount is "+totalAmount);
 		char choice2 = sc.next().charAt(0);
 		if(choice2=='s'||choice2=='S') {
 			order();  
@@ -182,17 +80,41 @@ public class Main {
 			System.out.println("Thank You for Visiting....");
 		}		
 	}
-	public static void printBill() {
-		Iterator<Billing> iter =Bill.iterator();
+	public  void process(int buyid) {
+		char again;
+		System.out.println("Enter the number of "+Stationaythings.get(buyid-1).getProductName() +" You Want");
+		int quantity=sc.nextInt();
+		if(quantity<=Stationaythings.get(buyid-1).getupdatedQuantity()) {
+			totalAmount=totalAmount+(quantity*Stationaythings.get(buyid-1).getPrice());
+			Stationaythings.get(buyid-1).updateQuantity(quantity);
+			Billing Billlist = new Billing(buyid, Stationaythings.get(buyid-1).getProductName(),quantity, quantity*Stationaythings.get(buyid-1).getPrice());
+			Bill.add(Billlist);
+			System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
+			again=sc.next().charAt(0);
+			if(again=='S'||again=='s') {
+				order();
+			}else if(again=='d'||again=='D'){
+				displayThings();
+			}else {
+				printBill();
+			}}
+		else {
+			System.out.println("Sorry we only have "+Stationaythings.get(buyid-1).getQuantity()+"pieces"+"Enter below the stock level");
+			order();
+		}
+	}
+	public void printBill() {
+		 Iterator<Billing> iter =Bill.iterator();
 		 LocalDateTime now = LocalDateTime.now();  
 		 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 	     String formatDateTime = now.format(format); 
-	     System.out.println("******Stationary Store********");
-	     System.out.println("Customer Name is:"+name);
-	     System.out.println("Purchased on:"+formatDateTime);
-		while(iter.hasNext()) {
+	     System.out.println("\t\t******Stationary Store********");
+	     System.out.println("Customer Name : "+name);
+	     System.out.println("Date & Time:"+formatDateTime);
+	     System.out.println("Productid\t"+"Productname"+"\tPrice"+"\tQuantity");
+		 while(iter.hasNext()) {
 			System.out.println(iter.next());
-		}System.out.println("****Thank You For Shopping:-)*****");
+		}System.out.println("\tYour Total Amount is "+totalAmount);
+		 System.out.println("****Thank You For Shopping:-)*****");
 	}
 }
-
