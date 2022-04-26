@@ -1,37 +1,50 @@
-package project;
-import java.time.LocalDateTime;  
-import java.time.format.DateTimeFormatter;  
+package project;  
 
 public class Billing {
-	String ProductName;
-	int Quantity;
-	int Price;
+	int productId;
+	String productName;
+	int quantity;
+	int price;
+	
+	public int getProductId() {
+		return productId;
+	}
+
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
 	public String getProductName() {
-		return ProductName;
+		return productName;
 	}
+
 	public void setProductName(String productName) {
-		ProductName = productName;
+		this.productName = productName;
 	}
-	public int getPrice() {
-		return Price;
-	}
-	public void setPrice(int price) {
-		Price = price;
-	}
+
 	public int getQuantity() {
-		return Quantity;
+		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
-		Quantity = quantity;
+		this.quantity = quantity;
 	}
-	public Billing(String productName, int quantity, int price) {
-		super();
-		ProductName = productName;
-		Quantity = quantity;
-		Price = price;
+
+	public int getPrice() {
+		return price;
 	}
-	@Override
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public Billing(int productId, String productName, int quantity, int price) {
+		this.productId = productId;
+		this.productName = productName;
+		this.quantity = quantity;
+		this.price = price;
+	}
 	public String toString() {
-		return "ProductName=" + ProductName + ", \tQuantity=" + Quantity +",\tPrice="+Price +"";
+		return "\t" + productId +"\t" + productName + "\t" + price + "\t"+quantity;
 	}	
 }

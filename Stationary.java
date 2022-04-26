@@ -1,14 +1,11 @@
 package project;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Stationary {
-//	static 
+
 	int id;
 	String  productName;
-	int Price;
-	int Quantity;
+	int price;
+	int quantity;
 	
 	
 	public int getId() {
@@ -24,31 +21,32 @@ public class Stationary {
 		this.productName = productName;
 	}
 	public   int getQuantity() {
-		return Quantity;
+		return quantity;
 	}
 	public  void setQuantity(int quantity) {
-		Quantity = quantity;
+		this.quantity = quantity;
 	}
 	public  void updateQuantity(int quantity) {
-		Quantity = Quantity-quantity;
-	}public int getupdatedQuantity() {
-		return Quantity;
+		quantity = quantity-quantity;
+	}
+	public int getupdatedQuantity() {
+		return quantity;
 	}
 	
 	public int getPrice() {
-		return Price;
+		return price;
 	}
 	public void setPrice(int price) {
-		Price = price;
+		this.price = price;
 	}
 	public Stationary(int id,String productName, int price, int quantity) {
 		this.id = id;
 		this.productName = productName;
-		Price = price;
-		Quantity=quantity;
+		this.price = price;
+		this.quantity=quantity;
 	}
 	@Override
 	public String toString() {
-		return "id=" + id +", \tproductName=" + productName + ", \tPrice=" + Price + ", \tQuantity=" + Quantity;
+		return "\t" + id +"\t" + productName + "\t" + price + "\t"+quantity;
 	}	
 }
