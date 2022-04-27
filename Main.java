@@ -10,12 +10,10 @@ import java.util.Scanner;
 public class Main {
 	static int totalAmount=0;
 	static Scanner sc = new Scanner(System.in);
-	static List<Stationary> Stationarythings =  new ArrayList<>();
-	static List<Billing> Bill = new ArrayList<>();
-	static String name;
-	int Buyid;
+	static List<Stationary> stationaryThings =  new ArrayList<>();
+	static List<Billing> bill = new ArrayList<>();
+	static String customerName;
 	
-
 	public static void main(String[] args) {
 		Stationary pencil   = new Stationary(1,"Pencil\t",3,30);
 		Stationary pen      = new Stationary(2,"Pen\t",5,20);
@@ -23,37 +21,34 @@ public class Main {
 		Stationary inkBottle = new Stationary(4,"InkBottle",25,5);
 		Stationary gelpen    = new Stationary(5,"GelPen\t",10,4);
 	
-		Stationarythings.add(pencil);
-		Stationarythings.add(pen);
-		Stationarythings.add(rubber);
-		Stationarythings.add(inkBottle);
-		Stationarythings.add(gelpen);
+		stationaryThings.add(pencil);
+		stationaryThings.add(pen);
+		stationaryThings.add(rubber);
+		stationaryThings.add(inkBottle);
+		stationaryThings.add(gelpen);
 		Main main = new Main();
-		System.out.println("*****Welcome to Stationary*****");
+		System.out.println("\t*****Welcome to Stationary*****");
 		main.inputMenu();
 	}
 	public void inputMenu() {
-		System.out.println("Enter Your Name:");
+		System.out.print("Enter Your Name : ");
 //		String namePattern = "[^\\p{P}|^\\d+]+";
-		//true if name contains only alphabets, false - otherwise
-		name = sc.nextLine();
+//		true if name contains only alphabets, false - otherwise
 //		boolean result =name.matches(namePattern);
 		
-		System.out.println("Enter Y to display All Available Things");
-		char choice = sc.next().charAt(0);
-		if(choice=='Y'||choice=='y') {
-			displayThings();
-		}else {
-			System.out.println("Oops Okay:-(\nBYEeeee");
-		}
+		customerName = sc.nextLine();
+		System.out.println(":-)Thank You for Entering Your Valuable Name\nThe Available Things Are");
+		displayThings();
+		
 	}
 	public void order() {
 		
 		System.out.println("Choose the things whatever you Want by clicking on the id");
-		int Buyid=sc.nextInt();
-		if(Buyid>=1 && Buyid<=5)
+		
+		int buyId=sc.nextInt();
+		if(buyId>=1 && buyId<=5)
 		{
-			process(Buyid);
+			process(buyId);
 		}
 		else
 		{
@@ -64,8 +59,8 @@ public class Main {
 
 	public void displayThings() {
 		System.out.println("Productid"+"\tProductname"+"\tPrice"+"\tQuantity");
-		for(Stationary s:Stationarythings) {
-			System.out.println(s);
+		for(Stationary printStationaryThings:stationaryThings) {
+			System.out.println(printStationaryThings);
 		}
 		System.out.println("For to Buy things press S or press Anyother to Exit:-)");
 //		System.out.println("Currently Your Payable Amount is "+totalAmount);
@@ -77,40 +72,40 @@ public class Main {
 		}		
 	}
 	public  void process(int buyid) {
-		char again;
-		System.out.println("Enter the number of "+Stationarythings.get(buyid-1).getProductName() +" You Want");
-		int quantity=sc.nextInt();
-		if(quantity<=Stationarythings.get(buyid-1).getupdatedQuantity()) {
-			totalAmount=totalAmount+(quantity*Stationarythings.get(buyid-1).getPrice());
-			Stationarythings.get(buyid-1).updateQuantity(quantity);
-			Billing Billlist = new Billing(buyid, Stationarythings.get(buyid-1).getProductName(),quantity, quantity*Stationarythings.get(buyid-1).getPrice());
-			Bill.add(Billlist);
+		char continueProcess;
+		System.out.println("Enter the number of "+stationaryThings.get(buyid-1).getProductName() +" You Want");
+		int requiredQuantity=sc.nextInt();
+		if(requiredQuantity<=stationaryThings.get(buyid-1).getupdatedQuantity()) {
+			totalAmount=totalAmount+(requiredQuantity*stationaryThings.get(buyid-1).getPrice());
+			stationaryThings.get(buyid-1).updateQuantity(requiredQuantity);
+			Billing Billlist = new Billing(buyid, stationaryThings.get(buyid-1).getProductName(),requiredQuantity, requiredQuantity*stationaryThings.get(buyid-1).getPrice());
+			bill.add(Billlist);
 			System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
-			again=sc.next().charAt(0);
-			if(again=='S'||again=='s') {
+			continueProcess=sc.next().charAt(0);
+			if(continueProcess=='S'||continueProcess=='s') {
 				order();
-			}else if(again=='d'||again=='D'){
+			}else if(continueProcess=='d'||continueProcess=='D'){
 				displayThings();
 			}else {
 				printBill();
 			}}
 		else {
-			System.out.println("Sorry we only have "+Stationarythings.get(buyid-1).getQuantity()+"pieces"+"Enter below the stock level");
+			System.out.println("Sorry we only have "+stationaryThings.get(buyid-1).getQuantity()+"pieces Please Enter a Valid Quantity");
 			order();
 		}
 	}
 	public void printBill() {
-		 Iterator<Billing> iter =Bill.iterator();
+		 Iterator<Billing> iterate =bill.iterator();
 		 LocalDateTime now = LocalDateTime.now();  
 		 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 	     String formatDateTime = now.format(format); 
 	     System.out.println("\t\t******Stationary Store********");
-	     System.out.println("Customer Name : "+name);
+	     System.out.println("Customer Name : "+customerName);
 	     System.out.println("Date & Time:"+formatDateTime);
-	     System.out.println("Productid\t"+"Productname"+"\tPrice"+"\tQuantity");
-		 while(iter.hasNext()) {
-			System.out.println(iter.next());
-		}System.out.println("\tYour Total Amount is "+totalAmount);
+	     System.out.println("Productid\t"+"Productname"+"\tQuantity"+"\tPrice");
+		 while(iterate.hasNext()) {
+			System.out.println(iterate.next());
+		}System.out.println("\tYour Total Payable Amount is Rupees : "+totalAmount);
 		 System.out.println("****Thank You For Shopping:-)*****");
 	}
 }

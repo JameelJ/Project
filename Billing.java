@@ -3,8 +3,8 @@ package project;
 public class Billing {
 	int productId;
 	String productName;
-	int quantity;
-	int price;
+	int totalQuantity;
+	int productPiecePrice;
 	
 	public int getProductId() {
 		return productId;
@@ -23,28 +23,28 @@ public class Billing {
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return totalQuantity;
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.totalQuantity = quantity;
 	}
 
 	public int getPrice() {
-		return price;
+		return productPiecePrice;
 	}
 
 	public void setPrice(int price) {
-		this.price = price;
+		this.productPiecePrice = price;
 	}
 
 	public Billing(int productId, String productName, int quantity, int price) {
 		this.productId = productId;
 		this.productName = productName;
-		this.quantity = quantity;
-		this.price = price;
+		this.totalQuantity = quantity;
+		this.productPiecePrice = price;
 	}
 	public String toString() {
-		return "\t" + productId +"\t" + productName + "\t" + price + "\t"+quantity;
+		return "\t" + productId +"\t" + productName + "\t" + totalQuantity + "\t\t"+ productPiecePrice;
 	}	
 }

@@ -2,17 +2,16 @@ package project;
 
 public class Stationary {
 
-	int id;
+	int productId;
 	String  productName;
-	int price;
-	int quantity;
-	
+	int productPiecePrice;
+	int totalProductQuantity;
 	
 	public int getId() {
-		return id;
+		return productId;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.productId = id;
 	}
 	public String getProductName() {
 		return productName;
@@ -21,32 +20,31 @@ public class Stationary {
 		this.productName = productName;
 	}
 	public   int getQuantity() {
-		return quantity;
+		return totalProductQuantity;
 	}
 	public  void setQuantity(int quantity) {
-		this.quantity = quantity;
+		this.totalProductQuantity = quantity;
 	}
 	public  void updateQuantity(int quantity) {
-		quantity = quantity-quantity;
+		totalProductQuantity = totalProductQuantity-quantity;
 	}
 	public int getupdatedQuantity() {
-		return quantity;
+		return totalProductQuantity;
 	}
-	
 	public int getPrice() {
-		return price;
+		return productPiecePrice;
 	}
 	public void setPrice(int price) {
-		this.price = price;
+		this.productPiecePrice = price;
 	}
 	public Stationary(int id,String productName, int price, int quantity) {
-		this.id = id;
+		this.productId = id;
 		this.productName = productName;
-		this.price = price;
-		this.quantity=quantity;
+		this.productPiecePrice = price;
+		this.totalProductQuantity=quantity;
 	}
 	@Override
 	public String toString() {
-		return "\t" + id +"\t" + productName + "\t" + price + "\t"+quantity;
+		return "\t" + productId +"\t" + productName + "\t" + productPiecePrice + "\t"+totalProductQuantity;
 	}	
 }
