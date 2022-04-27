@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
 	static int totalAmount=0;
 	static Scanner sc = new Scanner(System.in);
-	static List<Stationary> Stationaythings =  new ArrayList<>();
+	static List<Stationary> Stationarythings =  new ArrayList<>();
 	static List<Billing> Bill = new ArrayList<>();
 	static String name;
 	int Buyid;
@@ -23,32 +23,28 @@ public class Main {
 		Stationary inkBottle = new Stationary(4,"InkBottle",25,5);
 		Stationary gelpen    = new Stationary(5,"GelPen\t",10,4);
 	
-		Stationaythings.add(pencil);
-		Stationaythings.add(pen);
-		Stationaythings.add(rubber);
-		Stationaythings.add(inkBottle);
-		Stationaythings.add(gelpen);
+		Stationarythings.add(pencil);
+		Stationarythings.add(pen);
+		Stationarythings.add(rubber);
+		Stationarythings.add(inkBottle);
+		Stationarythings.add(gelpen);
 		Main main = new Main();
 		System.out.println("*****Welcome to Stationary*****");
 		main.inputMenu();
 	}
 	public void inputMenu() {
 		System.out.println("Enter Your Name:");
-		String namePattern = "[^\\p{P}|^\\d+]+";
+//		String namePattern = "[^\\p{P}|^\\d+]+";
 		//true if name contains only alphabets, false - otherwise
-		name = sc.next();
-		boolean result =name.matches(namePattern);
-		if(result==true) {
-			System.out.println("Enter Y to display All Available Things");
-			char choice = sc.next().charAt(0);
-			if(choice=='Y'||choice=='y') {
-				displayThings();
-			}else {
-				System.out.println("Oops Okay:-(\nBYEeeee");
-			}
+		name = sc.nextLine();
+//		boolean result =name.matches(namePattern);
+		
+		System.out.println("Enter Y to display All Available Things");
+		char choice = sc.next().charAt(0);
+		if(choice=='Y'||choice=='y') {
+			displayThings();
 		}else {
-			System.out.println("Please Enter a ProperName");
-			main(null);
+			System.out.println("Oops Okay:-(\nBYEeeee");
 		}
 	}
 	public void order() {
@@ -68,7 +64,7 @@ public class Main {
 
 	public void displayThings() {
 		System.out.println("Productid"+"\tProductname"+"\tPrice"+"\tQuantity");
-		for(Stationary s:Stationaythings) {
+		for(Stationary s:Stationarythings) {
 			System.out.println(s);
 		}
 		System.out.println("For to Buy things press S or press Anyother to Exit:-)");
@@ -82,12 +78,12 @@ public class Main {
 	}
 	public  void process(int buyid) {
 		char again;
-		System.out.println("Enter the number of "+Stationaythings.get(buyid-1).getProductName() +" You Want");
+		System.out.println("Enter the number of "+Stationarythings.get(buyid-1).getProductName() +" You Want");
 		int quantity=sc.nextInt();
-		if(quantity<=Stationaythings.get(buyid-1).getupdatedQuantity()) {
-			totalAmount=totalAmount+(quantity*Stationaythings.get(buyid-1).getPrice());
-			Stationaythings.get(buyid-1).updateQuantity(quantity);
-			Billing Billlist = new Billing(buyid, Stationaythings.get(buyid-1).getProductName(),quantity, quantity*Stationaythings.get(buyid-1).getPrice());
+		if(quantity<=Stationarythings.get(buyid-1).getupdatedQuantity()) {
+			totalAmount=totalAmount+(quantity*Stationarythings.get(buyid-1).getPrice());
+			Stationarythings.get(buyid-1).updateQuantity(quantity);
+			Billing Billlist = new Billing(buyid, Stationarythings.get(buyid-1).getProductName(),quantity, quantity*Stationarythings.get(buyid-1).getPrice());
 			Bill.add(Billlist);
 			System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
 			again=sc.next().charAt(0);
@@ -99,7 +95,7 @@ public class Main {
 				printBill();
 			}}
 		else {
-			System.out.println("Sorry we only have "+Stationaythings.get(buyid-1).getQuantity()+"pieces"+"Enter below the stock level");
+			System.out.println("Sorry we only have "+Stationarythings.get(buyid-1).getQuantity()+"pieces"+"Enter below the stock level");
 			order();
 		}
 	}
