@@ -39,7 +39,7 @@ public class Main {
 		System.out.println(":-)Thank You for Entering Your Valuable Name\nThe Available Items Are");
 		initialDisplayItem();	
 	}
-	public void gettingProductId() {
+	public void getProductId() {
 		System.out.println("Choose the things whatever you Want by clicking on the id");		
 		int productId=sc.nextInt();
 		if(productId>=1 && productId<=5)
@@ -49,7 +49,7 @@ public class Main {
 		else
 		{
 			System.out.println("Enter the correct id matching to Your Item");
-			gettingProductId();
+			getProductId();
 		}
 	}
 	public void displayInput() {
@@ -63,7 +63,7 @@ public class Main {
 		displayInput();
 		char choice2 = sc.next().charAt(0);
 		if(choice2=='s'||choice2=='S') {
-			gettingProductId();  
+			getProductId();  
 		}else{
 			System.out.println("Thank You for Visiting....");
 		}		
@@ -73,7 +73,7 @@ public class Main {
 		System.out.println("Currently Your Payable Amount is "+totalAmount);
 		char choice2 = sc.next().charAt(0);
 		if(choice2=='s'||choice2=='S') {
-			gettingProductId();  
+			getProductId();  
 		}else{
 			printBill();													//printing Bill and Current Amount
 			System.out.println("Thank You for Visiting....");
@@ -82,9 +82,9 @@ public class Main {
 	public void gettingRequiredQuantity(int productBuyId) {
 		System.out.println("Enter the number of "+items.get(productBuyId-1).getProductName() +" You Want");
 		int getRequiredQuantity=sc.nextInt();
-		process(productBuyId,getRequiredQuantity);
+		validateQuantity(productBuyId,getRequiredQuantity);
 	}
-	public void process(int productBuyid,int requiredQuantity) {
+	public void validateQuantity(int productBuyid,int requiredQuantity) {
 		if(requiredQuantity<=items.get(productBuyid-1).getupdatedQuantity()) {
 			calculateTotalAmount(productBuyid, requiredQuantity);
 			updateStock(productBuyid, requiredQuantity);
@@ -92,7 +92,7 @@ public class Main {
 			}
 		else {
 			System.out.println("Sorry we only have "+items.get(productBuyid-1).getQuantity()+"pieces Please Enter a Valid Quantity");
-			gettingProductId();
+			getProductId();
 		}
 	}
 	public void updateStock(int productId,int quantity) {
@@ -112,7 +112,7 @@ public class Main {
 		System.out.println("For to continue order press S or B for PayAmount & Bill or D to display the Menu");
 		continueProcess=sc.next().charAt(0);
 		if(continueProcess=='S'||continueProcess=='s') {
-			gettingProductId();
+			getProductId();
 		}else if(continueProcess=='d'||continueProcess=='D'){
 			displayItemsAgain();
 		}else {
@@ -131,6 +131,6 @@ public class Main {
 		 while(iterate.hasNext()) {
 			System.out.println(iterate.next());
 		}System.out.println("\tYour Total Payable Amount is Rupees : "+totalAmount);
-		 System.out.println("\t****Thank You For Shopping Visit Again:-)*****");
+		 System.out.println("\t*****Thank You For Shopping Visit Again:-)*****");
 	}
 }
