@@ -10,7 +10,6 @@ public class ProductBill {
 	public int getProductId() {
 		return productId;
 	}
-
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
@@ -48,14 +47,12 @@ public class ProductBill {
 	}
 
 	public ProductBill(int productId, String productName, int totalQuantity, int piecePrice, int productPiecePrice) {
-		super();
 		this.productId = productId;
 		this.productName = productName;
 		this.totalQuantity = totalQuantity;
 		this.piecePrice = piecePrice;
 		this.productPiecePrice = productPiecePrice;
 	}
-
 	public String toString() {
 		return "\t" + productId +"\t" + productName + "\t" + totalQuantity + "\t\t"+piecePrice+"\t\t"+ productPiecePrice;
 	}	
