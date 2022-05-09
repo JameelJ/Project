@@ -56,4 +56,5 @@ public class ProductBill {
 	public String toString() {
 		return "\t" + productId +"\t" + productName + "\t" + totalQuantity + "\t\t"+piecePrice+"\t\t"+ productPiecePrice;
 	}	
+	
 }
