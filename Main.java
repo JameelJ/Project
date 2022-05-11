@@ -7,12 +7,11 @@ import java.util.Scanner;
 
 public class Main {
 	static int totalAmount=0;
-	static Scanner sc = new Scanner(System.in);
 	static List<Product> items =  new ArrayList<>();
-	static List<ProductBill> bill = new ArrayList<>();
-	static String customerName;
 	
-	Billing Billing = new Billing();
+	
+	Billing billing = new Billing();
+	Scanner sc = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		Product pencil   = new Product(1,"Pencil\t",3,30);
@@ -30,21 +29,15 @@ public class Main {
 		System.out.println("\t*****Welcome to Stationary*****");
 		main.getCustomerName();
 	}
-//	public void getCustomerName() {
-//		System.out.print("Enter Your Name : ");
-//		customerName = sc.nextLine();
-//		System.out.println(":-)Thanks for Entering Your Valuable Name\nThe Available Items Are");
-//		displayProducts();	
-//	}
 	public void getCustomerName() {
 		System.out.print("Enter Your Name : ");
-		customerName=sc.nextLine();
-		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+customerName+".txt");
+		billing.customerName=sc.nextLine();
+		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+billing.customerName+".txt");
 		if(file.exists()) {
 			System.out.println("Hey Do you want to see Your Previous Bills Press S or N for Shopping");
 			char choice = sc.next().charAt(0);
 			if (choice =='S' || choice=='s') {
-				Billing.showCustomerFileList();
+				billing.showCustomerFileList();
 			}else {
 				displayProducts();
 			}
@@ -83,7 +76,7 @@ public class Main {
 			if(choice2=='s'||choice2=='S') {
 				getProductId();  
 			}else{
-				Billing.printBill();													//printing Bill and Current Amount
+				billing.printBill();													//printing Bill and Current Amount
 				System.out.println("Thank You for Visiting....");
 			}
 		}
@@ -127,7 +120,7 @@ public class Main {
 	public void addToBill(int productId,int purchasedQuantity)	
 	{
 		ProductBill Billlist = new ProductBill(productId, items.get(productId-1).getProductName(),purchasedQuantity,items.get(productId-1).getPrice() ,purchasedQuantity*items.get(productId-1).getPrice());
-		bill.add(Billlist);
+		billing.bill.add(Billlist);
 	}
 	public void repeatProcess() {
 		char continueProcess;
@@ -142,7 +135,7 @@ public class Main {
 			}else if(continueProcess=='d'||continueProcess=='D'){
 				displayProducts();
 			}else if(totalAmount>0) {
-				Billing.printBill();
+				billing.printBill();
 			} else {    
 				System.out.println("You havent purchased Anything for Billing");
 			}

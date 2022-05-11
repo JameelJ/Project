@@ -6,22 +6,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Billing {
 //	Main object = new Main();
 	Scanner input = new Scanner(System.in);
+	List<ProductBill> bill = new ArrayList<>();
+	String customerName;
 public void printBill(){
 		
 		LocalDateTime now = LocalDateTime.now(); 
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 		String formatDateTime = now.format(format); 
 		System.out.println("\t\t******Stationary Store********");
-	    System.out.println("Customer Name : "+Main.customerName);
+	    System.out.println("Customer Name : "+customerName);
 	    System.out.println("Date & Time:"+formatDateTime);
 	    System.out.println("\nProductid\t"+"Productname"+"\tQuantity(Q)"+"\tPrice/(Q)"+"\tPrice");
-	    Iterator<ProductBill> iterate =Main.bill.iterator();
+	    Iterator<ProductBill> iterate =bill.iterator();
 	  
 	    while(iterate.hasNext()) {
 			System.out.println(iterate.next());
@@ -42,17 +46,17 @@ public void printBill(){
 		LocalDateTime now = LocalDateTime.now(); 
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 		String formatDateTime = now.format(format); 
-		String filePath = "C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+Main.customerName+".txt"; 
+		String filePath = "C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+customerName+".txt"; 
 		
 		File file = new File(filePath);
 		try {
 			FileWriter wr = new FileWriter(file, true);
 			file.createNewFile();
 //			FileWriter wr = new FileWriter(file);
-			wr.write("\n\t******Stationary Store********"+"\nCustomer Name : "+Main.customerName
+			wr.write("\n\t******Stationary Store********"+"\nCustomer Name : "+customerName
 					+ "\nDate & Time : "+formatDateTime);
 			wr.write("\nProductid\t"+"Productname"+"\tQuantity(Q)"+"\tPrice/(Q)"+"\tPrice");
-			Iterator<ProductBill> iterate =Main.bill.iterator();
+			Iterator<ProductBill> iterate =bill.iterator();
 			while(iterate.hasNext()) {	
 				 ProductBill a= iterate.next();
 					wr.write("\n\t"+a.getProductId()+"\t" +a.getProductName()+"\t"+a.getQuantity()+"\t\t"+a.getPiecePrice()+"\t\t"+a.getPrice());
@@ -67,7 +71,7 @@ public void printBill(){
 		
 	}
 	public void showCustomerFileList() {
-		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+Main.customerName+".txt");
+		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+customerName+".txt");
 		FileReader rd;
 		try {
 			rd = new FileReader(file);
