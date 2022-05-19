@@ -8,10 +8,9 @@ import java.util.Scanner;
 public class Main {
 	static int totalAmount=0;
 	static List<Product> items =  new ArrayList<>();
-	
-	
-	Billing billing = new Billing();
+	Billing billing;
 	Scanner sc = new Scanner(System.in);
+	int productId;
 	
 	public static void main(String[] args) {
 		Product pencil   = new Product(1,"Pencil\t",3,30);
@@ -29,15 +28,19 @@ public class Main {
 		System.out.println("\t*****Welcome to Stationary*****");
 		main.getCustomerName();
 	}
+	//Getting Customer Name As input
 	public void getCustomerName() {
 		System.out.print("Enter Your Name : ");
-		billing.customerName=sc.nextLine();
-		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+billing.customerName+".txt");
-		if(file.exists()) {
+		billing= new Billing();
+		billing.customerName=sc.nextLine();    												
+		String  name=billing.customerName;
+
+		if(checkCustomerBillFileAvailable(name)) { 																				//showcustomerBillifAvailable
 			System.out.println("Hey Do you want to see Your Previous Bills Press S or N for Shopping");
 			char choice = sc.next().charAt(0);
 			if (choice =='S' || choice=='s') {
-				billing.showCustomerFileList();
+				billing.showCustomerBillFile();
+				repeatProcess();
 			}else {
 				displayProducts();
 			}
@@ -46,16 +49,17 @@ public class Main {
 			displayProducts();
 		}
 	}
-//	public static boolean isValidUserName(String customerName) {
-//		String namePattern="^[A-Za-z]\\w{5,29}$";
-//		Pattern p = Pattern.compile(namePattern);
-//		if(customerName == null) {
-//			return false;
-//		}
-//		Matcher m = p.matcher(customerName);
-//		return m.matches();
-//	}
+	 
+	//Checks the customerName with File 
+	public boolean checkCustomerBillFileAvailable(String name){							
+		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+name+".txt"); 
+		if(file.exists()) {
+			return true;
+		}
+		return false;
+	}
 	
+	//Displaying the Available Products in Store
 	public void displayProducts() {
 		System.out.println("Productid"+"\tProductname"+"\tPrice"+"\tQuantity");
 		for(Product printStationaryThings:items) {
@@ -66,7 +70,8 @@ public class Main {
 		if(totalAmount==0) {
 			char choice = sc.next().charAt(0);
 			if(choice=='s'||choice=='S') {
-				getProductId();  
+				getProductId();
+				gettingRequiredQuantity();
 			}else{
 				System.out.println("Thank You for Visiting....");
 			}		
@@ -74,54 +79,66 @@ public class Main {
 			System.out.println("Currently Your Payable Amount is "+totalAmount);
 			char choice2 = sc.next().charAt(0);
 			if(choice2=='s'||choice2=='S') {
-				getProductId();  
+				getProductId(); 
+				gettingRequiredQuantity();
+				
 			}else{
 				billing.printBill();													//printing Bill and Current Amount
 				System.out.println("Thank You for Visiting....");
 			}
 		}
 	}
-		public void getProductId() {
-			System.out.println("Choose the things whatever you Want by clicking on the id");		
-			int productId=sc.nextInt();
-			if(productId>=1 && productId<=5)
-			{
-				gettingRequiredQuantity(productId);
-			}
-			else
-			{
-				System.out.println("Enter the correct id matching to Your Item");
-				getProductId();
-			}
-	}
-	public void gettingRequiredQuantity(int productBuyId) {
-		System.out.println("Enter the number of "+items.get(productBuyId-1).getProductName() +" You Want");
-		int getRequiredQuantity=sc.nextInt();
-		validateQuantity(productBuyId,getRequiredQuantity);
-	}
-	public void validateQuantity(int productBuyid,int requiredQuantity) {
-		if(requiredQuantity<=items.get(productBuyid-1).getupdatedQuantity()) {
-			calculateTotalAmount(productBuyid, requiredQuantity);
-			updateStock(productBuyid, requiredQuantity);
-			repeatProcess();
-			}
-		else {
-			System.out.println("Sorry we only have "+items.get(productBuyid-1).getQuantity()+"pieces Please Enter a Valid Quantity");
+	
+	//Getting ProductId as a Input from Customer
+	public void getProductId() {
+		System.out.println("Choose the things whatever you Want by clicking on the id");		
+		productId=sc.nextInt();
+		if(productId>=1 && productId<=5)
+		{
+			return;
+		}
+		else
+		{
+			System.out.println("Enter the correct id matching to Your Item");
 			getProductId();
 		}
 	}
-	public void updateStock(int productId,int quantity) {
+		
+	//Getting the Required Quantity as an Input.
+	public void gettingRequiredQuantity() {
+		System.out.println("Enter the number of "+items.get(productId-1).getProductName() +" You Want");
+		int getRequiredQuantity=sc.nextInt();
+		validateQuantity(getRequiredQuantity);
+	}
+	
+	//Validating the RequiredQuantity with Available Stock
+	public void validateQuantity(int requiredQuantity) {
+		if(requiredQuantity<=items.get(productId-1).getupdatedQuantity()) {
+			calculateTotalAmount(requiredQuantity);
+			updateStock(requiredQuantity);
+			repeatProcess();
+			}
+		else {
+			System.out.println("Sorry we only have "+items.get(productId-1).getQuantity()+"pieces Please Enter a Valid Quantity");
+			getProductId();
+		}
+	}
+	//Updating the Quantity of the Stock.
+	public void updateStock(int quantity) {
 		items.get(productId-1).updateQuantity(quantity);
 		addToBill(productId, quantity);
 	}
-	public void calculateTotalAmount(int productId,int quantity) {
+	//Calculating the Total Amount for Bill
+	public void calculateTotalAmount(int quantity) {
 		totalAmount=totalAmount+(quantity*items.get(productId-1).getPrice());
 	}
+	//Adding the Customer bought Products to Bill
 	public void addToBill(int productId,int purchasedQuantity)	
 	{
-		ProductBill Billlist = new ProductBill(productId, items.get(productId-1).getProductName(),purchasedQuantity,items.get(productId-1).getPrice() ,purchasedQuantity*items.get(productId-1).getPrice());
-		billing.bill.add(Billlist);
+		ProductBill billList = new ProductBill(productId, items.get(productId-1).getProductName(),purchasedQuantity,items.get(productId-1).getPrice() ,purchasedQuantity*items.get(productId-1).getPrice());
+		billing.bill.add(billList);
 	}
+	
 	public void repeatProcess() {
 		char continueProcess;
 		if(totalAmount==0) {
@@ -132,6 +149,7 @@ public class Main {
 			continueProcess=sc.next().charAt(0);
 			if(continueProcess=='S'||continueProcess=='s') {
 				getProductId();
+				gettingRequiredQuantity();
 			}else if(continueProcess=='d'||continueProcess=='D'){
 				displayProducts();
 			}else if(totalAmount>0) {

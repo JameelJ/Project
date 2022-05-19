@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Billing {
-//	Main object = new Main();
 	Scanner input = new Scanner(System.in);
 	List<ProductBill> bill = new ArrayList<>();
 	String customerName;
+
+	//Prints CustomerBill after Purchase
 public void printBill(){
-		
 		LocalDateTime now = LocalDateTime.now(); 
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");  
 		String formatDateTime = now.format(format); 
@@ -36,11 +36,13 @@ public void printBill(){
 		System.out.println("To see Customer Details Press Y or Anyother to exit");
 		char ch= input.next().charAt(0);
 		if(ch=='Y'||ch=='y') {
-			showCustomerFileList(); 
+			showCustomerBillFile(); 
 		}else {
 			return;
 		}
 	}
+
+	//Saves the CustomerBill to File.
 	public void saveBillToFile()
 	{
 		LocalDateTime now = LocalDateTime.now(); 
@@ -52,7 +54,6 @@ public void printBill(){
 		try {
 			FileWriter wr = new FileWriter(file, true);
 			file.createNewFile();
-//			FileWriter wr = new FileWriter(file);
 			wr.write("\n\t******Stationary Store********"+"\nCustomer Name : "+customerName
 					+ "\nDate & Time : "+formatDateTime);
 			wr.write("\nProductid\t"+"Productname"+"\tQuantity(Q)"+"\tPrice/(Q)"+"\tPrice");
@@ -68,21 +69,23 @@ public void printBill(){
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	public void showCustomerFileList() {
+	
+	//Prints the CustomersBill from File.
+	public void showCustomerBillFile() {
 		File file = new File("C:\\Users\\Mohamed Jameel\\Desktop\\Store\\"+customerName+".txt");
 		FileReader rd;
 		try {
 			rd = new FileReader(file);
 			int output = rd.read();
-			Main object = new Main();
 			while(output!=-1) {
 				System.out.print((char)output);
 				output=rd.read();
-			}object.repeatProcess();
-		} catch (Exception e) {
+			}
+		} catch (Exception e) {				
+			System.out.println("File Not Found due to Some Error with System");
 			e.printStackTrace();
+			return;
 		}
 	}
 }
